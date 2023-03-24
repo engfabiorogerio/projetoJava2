@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.engfabiorogerio.dao.DAOLoginRepository;
 import com.engfabiorogerio.model.ModelLogin;
 
 @WebServlet(urlPatterns = {"/principal/ServletLogin","/ServletLogin"})
 public class ServletLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private DAOLoginRepository daoLoginRepository = new DAOLoginRepository();
 
 	public ServletLogin() {
 		super();
@@ -31,14 +33,16 @@ public class ServletLogin extends HttpServlet {
 		String senha = request.getParameter("senha");
 		String url = request.getParameter("url");
 
+		
+		try {
+		
 		if (login != null && !login.isEmpty() && senha != null && !senha.isEmpty()) {
 
 			ModelLogin modelLogin = new ModelLogin();
 			modelLogin.setLogin(login);
 			modelLogin.setSenha(senha);
 
-			if (modelLogin.getLogin().equalsIgnoreCase("admin") &&
-					modelLogin.getSenha().equalsIgnoreCase("admin")) {
+			if (daoLoginRepository.validarAutenticacao(modelLogin)) {
 				
 				request.getSession().setAttribute("usuario", modelLogin.getLogin());
 				
@@ -60,7 +64,16 @@ public class ServletLogin extends HttpServlet {
 			request.setAttribute("msg", "Login e/ou Senha incorretos");
 			redirecionar.forward(request, response);
 		}
-
+		
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
 	}
-
+	
 }
+
+		
+	
+	
+

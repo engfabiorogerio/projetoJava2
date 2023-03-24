@@ -1,6 +1,8 @@
 package com.engfabiorogerio.filter;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,8 +16,13 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.engfabiorogerio.connection.SingleConnectionBanco;
+
 @WebFilter(urlPatterns = {"/principal/*"})
-public class FilterAutenticacao extends HttpFilter implements Filter {
+public class FilterAutenticacao extends HttpFilter implements Filter {	
+	private static final long serialVersionUID = 1L;
+	
+	private static Connection connection;
 
 	public FilterAutenticacao() {
 		super();
@@ -24,36 +31,66 @@ public class FilterAutenticacao extends HttpFilter implements Filter {
 
 	public void destroy() {
 
+		try {
+			
+			connection.close();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		}
+		
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpSession session = req.getSession();
-		
-		String usuarioLogado = (String) session.getAttribute("usuario");
-		String urlParaAutenticar = req.getServletPath();
-		
-		if(usuarioLogado == null && !urlParaAutenticar.equalsIgnoreCase("/principal/ServletLogin")) {
+		try {
 			
-			RequestDispatcher redireciona = request.getRequestDispatcher("/index.jsp?url=" + urlParaAutenticar);
-			request.setAttribute("msg", "Por favor realize o Login para acessar o Sistema");
-			redireciona.forward(request, response);
-			return;
+			HttpServletRequest req = (HttpServletRequest) request;
+			HttpSession session = req.getSession();
 			
-		}else {
+			String usuarioLogado = (String) session.getAttribute("usuario");
+			String urlParaAutenticar = req.getServletPath();
 			
-			chain.doFilter(request, response);
+			if(usuarioLogado == null && !urlParaAutenticar.equalsIgnoreCase("/principal/ServletLogin")) {
+				
+				RequestDispatcher redireciona = request.getRequestDispatcher("/index.jsp?url=" + urlParaAutenticar);
+				request.setAttribute("msg", "Por favor realize o Login para acessar o Sistema");
+				redireciona.forward(request, response);
+				return;
+				
+			}else {
+				
+				chain.doFilter(request, response);
+				
+			}
+			
+			connection.commit();
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			try {
+				
+				connection.rollback();
+				
+			} catch (SQLException e1) {
+				
+				e1.printStackTrace();
+				
+			}
 			
 		}
-		
 		
 		
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
 
+		connection = SingleConnectionBanco.getConnection();
+		
 	}
 
 }
