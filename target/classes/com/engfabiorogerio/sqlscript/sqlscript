@@ -6,11 +6,19 @@ CREATE DATABASE bdprojeto1
        LC_CTYPE = 'Portuguese_Brazil.1252'
        CONNECTION LIMIT = -1;
 
+-- Table: public.model_login
+
+-- DROP TABLE public.model_login;
+
 CREATE TABLE public.model_login
 (
-  login character varying(200)[],
-  senha character varying(12)[],
-  CONSTRAINT "login-unique" UNIQUE (login)
+  login character varying(200),
+  senha character varying(12) NOT NULL,
+  id integer NOT NULL DEFAULT nextval('model_login_id_seq'::regclass),
+  nome character varying(200) NOT NULL,
+  email character varying(100) NOT NULL,
+  CONSTRAINT model_login_pkey PRIMARY KEY (id),
+  CONSTRAINT login_unique UNIQUE (login)
 )
 WITH (
   OIDS=FALSE
