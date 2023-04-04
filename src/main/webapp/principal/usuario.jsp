@@ -454,7 +454,8 @@
 										<button type="button" class="btn btn-primary waves-effect waves-light" onclick="limparForm()">Novo</button>
 										<button type="submit" name="salvar" class="btn btn-success waves-effect waves-light">Salvar</button>										
 										<button  type="button" name="excluir" class="btn btn-danger waves-effect waves-light" onclick="criarDelete()">Excluir</button>
-										
+										<!-- Button trigger modal -->
+										<button  type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalUsuario">Pesquisar</button>
 									</form>
 									
 									<span style="color:green; font-weight:bold;">${msg}</span>
@@ -471,6 +472,41 @@
 	</div>
 	</div>
 
+	<!-- Modal -->
+		<div class="modal fade" id="exampleModalUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Pesquisa de Usuário</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <form class="form-inline my-2 my-lg-0">
+			      <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+			      <button onclick="buscarUsuario();" class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+			    </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>		        
+		      </div>
+		      <table class="table table-striped">
+				  <thead>
+				    <tr>
+				      <th scope="col">Id</th>
+				      <th scope="col">Nome</th>
+				      <th scope="col">Ver</th>
+				      
+				    </tr>
+				  </thead>
+				  <tbody>
+				    
+				  </tbody>
+				</table>
+		    </div>
+		  </div>
+		</div>
 	<!-- Required Jquery -->
 	<jsp:include page="javascript.jsp"></jsp:include>
 	<script type="text/javascript">
