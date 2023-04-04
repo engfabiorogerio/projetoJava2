@@ -423,11 +423,13 @@
 											</div>
 										</div>
 									</div>
-									<form class="form-material" action="<%= request.getContextPath() %>/ServletUsuarioController" method="post">
+									<form class="form-material" action="<%= request.getContextPath() %>/ServletUsuarioController" method="post" id="formUser">
+										<input type="hidden" name="acao" id="acao" value="">
+										
 										<div class="form-group form-default">
 											<input type="text" name="id" id="id" class="form-control"
 												 readonly="readonly" value="${modolLogin.id}"> <span
-												class="form-bar"></span> <label class="float-label">Id:</label>
+												class="form-bar"></span> <label class="form-static-label">Id:</label>
 										</div>
 										<div class="form-group form-default">
 											<input type="text" name="nome"  id="nome" class="form-control"
@@ -449,13 +451,13 @@
 												class="form-control" required="required" value="${modolLogin.senha}" autocomplete="off"> <span
 												class="form-bar"></span> <label class="float-label">Senha</label>
 										</div>
-										<button name="novo" class="btn btn-primary waves-effect waves-light">Novo</button>
-										<button name="salvar" class="btn btn-success waves-effect waves-light">Salvar</button>										
-										<button name="excluir" class="btn btn-danger waves-effect waves-light">Excluir</button>
+										<button type="button" class="btn btn-primary waves-effect waves-light" onclick="limparForm()">Novo</button>
+										<button type="submit" name="salvar" class="btn btn-success waves-effect waves-light">Salvar</button>										
+										<button  type="button" name="excluir" class="btn btn-danger waves-effect waves-light" onclick="criarDelete()">Excluir</button>
 										
 									</form>
 									
-									<span>${msg }</span>
+									<span style="color:green; font-weight:bold;">${msg}</span>
 								</div>
 								<!-- ONDE IREI ALIMENTAR O CORPO DA PAGINA -->
 								<!-- Page-body end -->
@@ -471,6 +473,27 @@
 
 	<!-- Required Jquery -->
 	<jsp:include page="javascript.jsp"></jsp:include>
+	<script type="text/javascript">
+	
+	function criarDelete() {
+	   if(confirm('Deseja realmente excluir os dados?')){
+		   
+		    document.getElementById("formUser").method = 'get';
+		    document.getElementById("acao").value = 'deletar';
+		    document.getElementById("formUser").submit();
+	   }
+	    
+	}
+	
+	function limparForm(){
+		var elementos = document.getElementById("formUser").elements; /*Retorna os elementos html dentro do form*/
+	    
+	    for (p = 0; p < elementos.length; p ++){
+		    elementos[p].value = '';
+	    }
+	}
+	
+	</script>
 </body>
 
 </html>
