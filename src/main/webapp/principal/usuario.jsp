@@ -426,32 +426,32 @@
 									<form class="form-material" action="<%= request.getContextPath() %>/ServletUsuarioController" method="post">
 										<div class="form-group form-default">
 											<input type="text" name="id" id="id" class="form-control"
-												 > <span
+												 readonly="readonly" value="${modolLogin.id}"> <span
 												class="form-bar"></span> <label class="float-label">Id:</label>
 										</div>
 										<div class="form-group form-default">
 											<input type="text" name="nome"  id="nome" class="form-control"
-												required="required"> <span class="form-bar"></span> <label
+												required="required" value="${modolLogin.nome}"> <span class="form-bar"></span> <label
 												class="float-label">Nome:</label>
 										</div>
 										<div class="form-group form-default">
 											<input type="email" name="email" id="email"  class="form-control"
-												required="required"> <span class="form-bar" autocomplete="off"></span> <label
+												required="required" value="${modolLogin.email}"> <span class="form-bar" ></span> <label
 												class="float-label">E-mail:</label>
 										</div>
 										<div class="form-group form-default">
 											<input type="text" name="login" id="login"
-												class="form-control"  required="required" autocomplete="off"> <span
+												class="form-control"  required="required" value="${modolLogin.login}" autocomplete="off"> <span
 												class="form-bar"></span> <label class="float-label">Login</label>
 										</div>
 										<div class="form-group form-default">
 											<input type="password" name="senha" id="senha"
-												class="form-control" required="required" autocomplete="off"> <span
+												class="form-control" required="required" value="${modolLogin.senha}" autocomplete="off"> <span
 												class="form-bar"></span> <label class="float-label">Senha</label>
 										</div>
-										<button class="btn btn-primary waves-effect waves-light">Novo</button>
-										<button class="btn btn-success waves-effect waves-light">Salvar</button>										
-										<button class="btn btn-danger waves-effect waves-light">Excluir</button>
+										<button name="novo" class="btn btn-primary waves-effect waves-light">Novo</button>
+										<button name="salvar" class="btn btn-success waves-effect waves-light">Salvar</button>										
+										<button name="excluir" class="btn btn-danger waves-effect waves-light">Excluir</button>
 										
 									</form>
 									

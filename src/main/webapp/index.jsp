@@ -67,7 +67,7 @@
 		
 		<h1>Formulário Login</h1>
 	<div class="tudo">
-	<form action="ServletLogin" method="post" class="form-inline needs-validation" novalidate >
+	<form action="<%= request.getContextPath() %>/ServletLogin" method="post" class="form-inline needs-validation" novalidate >
 		<input type="hidden" value="<%=request.getParameter("url")%>"
 			name="url">
 		
