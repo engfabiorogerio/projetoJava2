@@ -25,7 +25,7 @@ public class FilterAutenticacao extends HttpFilter implements Filter {
 	private static Connection connection;
 
 	public FilterAutenticacao() {
-		super();
+		
 
 	}
 
@@ -73,7 +73,7 @@ public class FilterAutenticacao extends HttpFilter implements Filter {
 			
 			e.printStackTrace();
 			RequestDispatcher redirecionar = request.getRequestDispatcher("erro.jsp");
-			request.setAttribute("msg", "Login e/ou Senha incorretos");
+			request.setAttribute("msg", e.getMessage());
 			redirecionar.forward(request, response);
 			
 			try {

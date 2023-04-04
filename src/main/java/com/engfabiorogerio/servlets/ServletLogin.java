@@ -18,7 +18,7 @@ public class ServletLogin extends HttpServlet {
 	private DAOLoginRepository daoLoginRepository = new DAOLoginRepository();
 
 	public ServletLogin() {
-		super();
+		
 
 	}
 
