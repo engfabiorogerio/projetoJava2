@@ -491,7 +491,7 @@
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>		        
 		      </div>
-		      <table class="table table-striped">
+		      <table class="table table-striped" id="tabelaResultados">
 				  <thead>
 				    <tr>
 				      <th scope="col">Id</th>
@@ -510,6 +510,66 @@
 	<!-- Required Jquery -->
 	<jsp:include page="javascript.jsp"></jsp:include>
 	<script type="text/javascript">
+	
+	function buscarUsuario() {
+	    
+	    var nomeBusca = document.getElementById('nomeBusca').value;
+	    
+	    if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != ''){ /*Validando que tem que ter valor pra buscar no banco*/
+		
+		 var urlAction = document.getElementById('formUser').action;
+		
+		 $.ajax({
+		     
+		     method: "get",
+		     url : urlAction,
+		     data : "nomeBusca=" + nomeBusca + '&acao=buscarUserAjax',
+		     success: function (response) {
+		    	 
+		    	 var json = JSON.parse(response);
+		    	 
+		    	 console.info(json);
+			 
+			  $('#tabelaResultados > tbody > tr').remove();
+			 
+		     }
+		     
+		 }).fail(function(xhr, status, errorThrown){
+		    alert('Erro ao buscar usuário por nome: ' + xhr.responseText);
+		 });
+		
+		
+	    }
+	    
+	}
+
+	function criarDeleteComAjax() {
+	    
+	    if (confirm('Deseja realmente excluir os dados?')){
+		
+		 var urlAction = document.getElementById('formUser').action;
+		 var idUser = document.getElementById('id').value;
+		 
+		 $.ajax({
+		     
+		     method: "get",
+		     url : urlAction,
+		     data : "id=" + idUser + '&acao=deletarajax',
+		     success: function (response) {
+			 
+			  limparForm();
+			  document.getElementById('msg').textContent = response;
+		     }
+		     
+		 }).fail(function(xhr, status, errorThrown){
+		    alert('Erro ao deletar usuário por id: ' + xhr.responseText);
+		 });
+		 
+		  
+	    }
+	    
+	}
+
 	
 	function criarDelete() {
 	   if(confirm('Deseja realmente excluir os dados?')){
